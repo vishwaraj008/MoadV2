@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { generateDocsController } = require('../controllers/docController');
+const {apiValidator} = require("../utils/apiValidation")
 
-router.post('/', generateDocsController);
+router.post('/',apiValidator, generateDocsController);
 module.exports = router;
