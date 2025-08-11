@@ -2,9 +2,14 @@ const path = require('path');
 const fs = require('fs-extra');
 const { parseFileToMarkdown } = require('../utils/parseUtils');
 
-async function generateDocsForProject(projectPath) {
+async function generateDocsForProject(projectPath, outputPath) {
     const projectName = path.basename(projectPath);
-    const docsRoot = path.resolve(`./output/${projectName} Docs`);
+
+    // Always create "<project_name> Docs" folder, either in outputPath or in default "./output"
+    const docsRoot = outputPath
+        ? path.resolve(path.join(outputPath, `${projectName} Docs`))
+        : path.resolve(`./output/${projectName} Docs`);
+
     await fs.ensureDir(docsRoot);
 
     async function traverse(dir, relative = '') {

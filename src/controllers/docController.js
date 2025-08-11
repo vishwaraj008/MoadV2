@@ -1,9 +1,12 @@
 const { generateDocsForProject } = require('../services/docServices');
 
 async function generateDocsController(req, res) {
-    const { projectPath } = req.body;
+    const { projectPath, outputPath } = req.body;
     try {
-        await generateDocsForProject(projectPath);
+        if(!projectPath || !outputPath){
+            throw new Error("Invalid inputs")
+        }
+        await generateDocsForProject(projectPath, outputPath);
         res.status(200).json({ message: 'Documentation generated successfully.' });
     } catch (err) {
         console.error(err);
